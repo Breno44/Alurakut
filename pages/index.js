@@ -1,20 +1,73 @@
-import styled from "styled-components";
+import { MainGrid } from "../src/components/MainGrid";
+import { Box } from "../src/components/Box";
+import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations";
+import {
+  AlurakutMenu,
+  OrkutNostalgicIconSet,
+} from "../src/lib/AlurakutCommons";
 
-// const Title = styled.h1`
-//   font-size: 50px;
-//   color: ${({ theme }) => theme.colors.primary};
-// `;
-const Box = styled.h1`
-  background: #fff;
-  border-radius: 8px;
-`;
+function ProfileSidebar(propriedades) {
+  console.log(propriedades);
+  return (
+    <Box>
+      <img
+        src={`https://github.com/${propriedades.githubUser}.png`}
+        style={{ borderRadius: "8px" }}
+      />
+    </Box>
+  );
+}
 
 export default function Home() {
+  const usuarioAleatorio = "breno44";
+  const pessoasFavoritas = [
+    "juunegreiros",
+    "omariosouto",
+    "peas",
+    "rafaballerini",
+    "marcobrunodev",
+    "felipefialho",
+  ];
+
   return (
-    <main>
-      <Box>imagens</Box>
-      <Box>Bem vindo</Box>
-      <Box>comunidades</Box>
-    </main>
+    <>
+      <AlurakutMenu />
+      <MainGrid>
+        {/* <Box style="grid-area: profileArea;"> */}
+        <div className="profileArea" style={{ gridArea: "profileArea" }}>
+          <ProfileSidebar githubUser={usuarioAleatorio} />
+        </div>
+        <div className="welcomeArea" style={{ gridArea: "welcomeArea" }}>
+          <Box>
+            <h1 className="title">Bem vindo(a)</h1>
+
+            <OrkutNostalgicIconSet />
+          </Box>
+        </div>
+        <div
+          className="profileRelationsArea"
+          style={{ gridArea: "profileRelationsArea" }}
+        >
+          <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+              Pessoas da comunidade ({pessoasFavoritas.length})
+            </h2>
+
+            <ul>
+              {pessoasFavoritas.map((itemAtual) => {
+                return (
+                  <li>
+                    <a href={`/users/${itemAtual}`} key={itemAtual}>
+                      <img src={`https://github.com/${itemAtual}.png`} />
+                      <span>{itemAtual}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </ProfileRelationsBoxWrapper>
+        </div>
+      </MainGrid>
+    </>
   );
 }
